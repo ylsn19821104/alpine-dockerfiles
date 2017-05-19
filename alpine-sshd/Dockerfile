@@ -13,6 +13,7 @@ RUN apk --update add openssh \
 	&& sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
 	&& echo "root:${ROOT_PASSWORD}" | chpasswd \
 	&& mkdir -p /var/logs/supervisor \
+	&& mkdir -p /var/run/supervisor \
 	&& rm -rf /var/cache/apk/* /tmp/*
 
 RUN ssh-keygen -A
