@@ -1,4 +1,4 @@
-FROM alpine-sshd
+FROM ncc0706/alpine-sshd
 MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
 RUN addgroup -S redis && adduser -S -G redis redis
