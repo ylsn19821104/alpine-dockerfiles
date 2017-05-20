@@ -48,9 +48,11 @@ RUN apk --update add ca-certificates wget \
 		$TARGET_DIR/jre/lib/plugin.jar \
 	        /var/cache/apk/* /tmp/*
 
-ENV JAVA_HOME=$TARGET_DIR \
-    CLASSPATH=.:$TARGET_DIR/jre/rt.jar:$TARGET_DIR/lib/dt.jar:$TARGET_DIR/lib/tools.jar \
-    PATH=$PATH:$HOME/bin:$TARGET_DIR/bin
+# Set environment
+ENV JAVA_HOME /app/java
+ENV PATH ${PATH}:${JAVA_HOME}/bin
+
+
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
