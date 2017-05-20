@@ -15,10 +15,10 @@ RUN apk --update add ca-certificates wget \
 	&& rm -rf jdk-8u131-linux-x64.tar.gz \
 	&& rm -rf /var/cache/apk/* /tmp/*
 
-ENV JAVA_HOME /app/java
-ENV JRE_HOME $JAVA_HOME/jre
-ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib
-ENV PATH $PATH:$JAVA_HOME/bin
+ENV JAVA_HOME=/app/java \
+    JRE_HOME $JAVA_HOME/jre \
+    CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib \
+    PATH $PATH:$JAVA_HOME/bin
 
 ENTRYPOINT ["/usr/bin/supervisord"]
 
