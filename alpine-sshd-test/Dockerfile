@@ -21,7 +21,7 @@ RUN apk --update add openssh \
 
 RUN ssh-keygen -A
 
-ADD supervisord.conf /etc/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
 
 EXPOSE 22
 
