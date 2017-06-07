@@ -1,4 +1,5 @@
 FROM frolvlad/alpine-glibc:alpine-3.6
+MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
 ENV JAVA_VERSION=8 \
     JAVA_UPDATE=131 \
