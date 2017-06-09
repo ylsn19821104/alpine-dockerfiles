@@ -40,6 +40,6 @@ RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh && \
     chmod +x usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 8388/tcp
-EXPOSE 8388/udp
+#EXPOSE 8388/udp
 
 CMD ["docker-entrypoint.sh"]
