@@ -1,44 +1,45 @@
-# shadowsocks-libev with kcp
-
 FROM alpine:latest
 
-ENV SS_VER 3.0.5
-ENV SS_URL https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$SS_VER/shadowsocks-libev-$SS_VER.tar.gz
-ENV SS_DIR shadowsocks-libev-$SS_VER
+MAINTAINER niuyuxian <ncc0706@gmail.com>
 
-ENV KCP_VER 20170329
-ENV KCP_URL https://github.com/xtaci/kcptun/releases/download/v$KCP_VER/kcptun-linux-amd64-$KCP_VER.tar.gz
+ENV SS_LIBEV_VERSION=3.0.6
+ENV SS_DIR=shadowsocks-libev-${SS_LIBEV_VERSION}
 
-RUN apk add --no-cache --virtual .build-deps \
-      autoconf build-base libtool linux-headers xmlto asciidoc curl \
-      libev-dev libsodium-dev pcre-dev mbedtls-dev udns-dev openssl-dev \
-    && curl -sSL $SS_URL | tar xz \
-    && cd $SS_DIR && ./configure && make install && cd .. && rm -rf $SS_DIR \
-    && apk add --no-cache --virtual .run-deps \
-      libev libsodium pcre mbedtls udns privoxy \
-    && mkdir -p /opt/kcptun && cd /opt/kcptun && curl -sSL $KCP_URL | tar xz \
-    && apk del .build-deps
+RUN set -ex && \
+    apk add --no-cache libcrypto1.0 \
+                        libev \
+                        libsodium \
+                        mbedtls \
+                        pcre \
+                        udns \
+    && apk add --no-cache --virtual TMP autoconf \
+                             automake \
+                             build-base \
+                             curl \
+                             gettext-dev \
+                             libev-dev \
+                             libsodium-dev \
+                             libtool \
+                             linux-headers \
+                             mbedtls-dev \
+                             openssl-dev \
+                             pcre-dev \
+                             tar \
+                             udns-dev && \
+    cd /tmp && \
+    curl -SL -k https://github.com/shadowsocks/shadowsocks-libev/releases/download/v${SS_LIBEV_VERSION}/shadowsocks-libev-${SS_LIBEV_VERSION}.tar.gz | tar xz && \
+    cd $SS_DIR && \
+    ./configure --prefix=/usr --disable-documentation && \
+    make install && \
+    apk del TMP && \
+    rm -rf /tmp/* && \
+    rm -rf /var/cache/apk/*
 
-# set to an non-zero value to enable privoxy http proxy.
-ENV PORT          0
+COPY ./docker-entrypoint.sh /usr/local/bin/
+RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh && \
+    chmod +x usr/local/bin/docker-entrypoint.sh
 
-ENV SS_PORT       10800
-ENV SS_LOCAL_PORT 1080
-ENV SS_PASSWORD   node001
-ENV SS_METHOD     chacha20
-ENV SS_TIMEOUT    600
-ENV SS_SERVER     0.0.0.0
+EXPOSE 8388/tcp
+EXPOSE 8388/udp
 
-ENV KCP_PORT        9000
-ENV KCP_MODE        fast
-ENV KCP_MTU         1400
-ENV KCP_SNDWND      1024
-ENV KCP_RCVWND      1024
-ENV KCP_DATASHARD   10
-ENV KCP_PARITYSHARD 0
-
-EXPOSE $SS_PORT/tcp $SS_PORT/udp $KCP_PORT/udp
-
-COPY entrypoint /bin/entrypoint
-RUN chmod +x /bin/entrypoint
-ENTRYPOINT ["entrypoint"]
+CMD ["docker-entrypoint.sh"]
