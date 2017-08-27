@@ -11,6 +11,8 @@ RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > 
 
 RUN apk --update add openssh \
         supervisor \
+	tzdata \
+	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	&& sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
 	&& echo "root:${ROOT_PASSWORD}" | chpasswd \
 	&& mkdir -p /var/logs/supervisor \
