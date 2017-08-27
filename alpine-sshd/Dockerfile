@@ -7,7 +7,7 @@ ENV LANG=en_US.UTF-8 \
     ROOT_PASSWORD=node
 
 # using on arukas 
-# RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
+RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
 RUN apk --update add openssh \
         supervisor \
