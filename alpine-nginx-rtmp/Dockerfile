@@ -39,7 +39,7 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
        --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
     && make && make install \
     && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
-    && echo "daemon off;" >> /etc/nginx/ngnix.conf
+    && echo "daemon off;" >> /etc/nginx/ngnix.conf \
     && apk del build-base \
     && rm -rf /tmp/src \
     && rm -rf /var/cache/apk/*
