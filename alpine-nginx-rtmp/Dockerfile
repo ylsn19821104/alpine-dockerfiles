@@ -8,7 +8,7 @@ ENV TZ Asia/Shanghai
 # 国内镜像
 #RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
-RUN apk --update add tzdata \
+RUN apk --update add tzdata curl \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV NGINX_VERSION nginx-1.12.1
@@ -17,7 +17,7 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
    && cd /usr/local \
    && curl -sO http://nginx.org/download/${NGINX_VERSION}.tar.gz \
     tar -zxvf ${NGINX_VERSION}.tar.gz && \
-    cd /tmp/src/${NGINX_VERSION} && \
+    cd ${NGINX_VERSION} && \
     ./configure \
         --with-http_ssl_module \
         --with-http_gzip_static_module \
