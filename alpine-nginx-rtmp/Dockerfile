@@ -20,7 +20,11 @@ RUN addgroup -g 499 -S nginx \
     && tar xf $NGINX_VERSION.tar.gz \
     && rm -rf $NGINX_VERSION.tar.gz \
     && cd $NGINX_VERSION \
-    && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev libstdc++ libgcc patch logrotate supervisor inotify-tools && rm -rf /var/cache/apk/*
+    && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev \
+        pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev \
+        libstdc++ libgcc patch logrotate supervisor inotify-tools \
+        libpng libpng-devel
+    && rm -rf /var/cache/apk/*
 
 RUN ./configure \
     --prefix=/usr/local/nginx \
