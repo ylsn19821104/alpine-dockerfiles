@@ -1,38 +1,25 @@
 FROM alpine:latest
 MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
-ENV TZ=Asia/Shanghai
+ENV TZ Asia/Shanghai
 
-ENV NGINX_VERSION=nginx-1.10.1
+ENV NGINX_VERSION 1.10.1
 
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
-RUN apk --update add tzdata vim curl \
+RUN apk --update add tzdata wget \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-	&& rm -rf /var/cache/apk/* /tmp/*
-
 
 RUN addgroup -g 499 -S nginx \
     && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
-    && cd /usr/local \
-    && curl -sO http://nginx.org/download/$NGINX_VERSION.tar.gz \
-    && tar xf $NGINX_VERSION.tar.gz \
-    && rm -rf $NGINX_VERSION.tar.gz \
-    && cd $NGINX_VERSION \
-    && apk add --no-cache --virtual .build-deps \
-               gcc \
-               libc-dev \
-               make \
-               openssl-dev \
-               pcre-dev \
-               zlib-dev \
-               linux-headers \
-               curl \
-               jemalloc-dev \
-    && rm -rf /var/cache/apk/*
-
-RUN ./configure \
+    && apk --update add build-base ca-certificates linux-headers openssl openssl-dev pcre pcre-dev wget zlib zlib-dev \
+    && cd /tmp \
+    && wget http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
+    && tar xzf nginx-$NGINX_VERSION.tar.gz \
+    && rm -rf nginx-$NGINX_VERSION.tar.gz \
+    && cd nginx-$NGINX_VERSION \
+    ./configure \
     --prefix=/usr/local/nginx \
     --conf-path=/etc/nginx/nginx.conf \
     --user=nginx \
@@ -53,7 +40,8 @@ RUN ./configure \
     && make && make install \
     && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
     && echo "daemon off;" >> /etc/nginx/ngnix.conf \
-    && apk del wget
+    && apk del wget \
+    && rm -rf /var/cache/apk/* /tmp/*
 
 ENV PATH /usr/local/nginx/sbin:$PATH
 EXPOSE 80
