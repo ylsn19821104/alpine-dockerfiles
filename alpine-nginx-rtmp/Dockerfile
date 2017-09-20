@@ -11,7 +11,7 @@ ENV TZ Asia/Shanghai
 RUN apk --update add tzdata \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV NGINX_VERSION nginx-1.7.11
+ENV NGINX_VERSION nginx-1.12.1
 
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
     mkdir -p /tmp/src && \
