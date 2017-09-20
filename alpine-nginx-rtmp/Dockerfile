@@ -16,18 +16,30 @@ ENV NGINX_VERSION nginx-1.12.1
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
     && mkdir -p /tmp/src \
     && cd /tmp/src \
-    && curl -sO http://nginx.org/download/${NGINX_VERSION}.tar.gz \
+    && wget http://nginx.org/download/${NGINX_VERSION}.tar.gz \
     && tar -zxvf ${NGINX_VERSION}.tar.gz \
     && cd /tmp/src/${NGINX_VERSION} \
     && ./configure \
-        --with-http_ssl_module \
-        --with-http_gzip_static_module \
-        --prefix=/etc/nginx \
-        --http-log-path=/var/log/nginx/access.log \
-        --error-log-path=/var/log/nginx/error.log \
-        --sbin-path=/usr/local/sbin/nginx \
-    && make \
-    && make install \
+       --prefix=/usr/local/nginx \
+       --conf-path=/etc/nginx/nginx.conf \
+       --user=nginx \
+       --group=nginx \
+       --error-log-path=/var/log/nginx/error.log \
+       --http-log-path=/var/log/nginx/access.log \
+       --pid-path=/var/run/nginx/nginx.pid \
+       --lock-path=/var/lock/nginx.lock \
+       --with-http_ssl_module \
+       --with-http_stub_status_module \
+       --with-http_gzip_static_module \
+       --with-http_flv_module \
+       --with-http_mp4_module \
+       --http-client-body-temp-path=/var/tmp/nginx/client \
+       --http-proxy-temp-path=/var/tmp/nginx/proxy \
+       --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
+       --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
+    && make && make install \
+    && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
+    && echo "daemon off;" >> /etc/nginx/ngnix.conf
     && apk del build-base \
     && rm -rf /tmp/src \
     && rm -rf /var/cache/apk/*
