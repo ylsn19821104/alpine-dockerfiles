@@ -13,7 +13,7 @@ RUN apk --update add tzdata \
 
 RUN addgroup -g 499 -S nginx \
     && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
-#    && apk --update add build-base ca-certificates linux-headers openssl openssl-dev pcre pcre-dev make zlib zlib-dev \
+    && apk --update add build-base ca-certificates linux-headers openssl openssl-dev pcre pcre-dev make zlib zlib-dev \
     && cd /tmp \
     && wget http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar xzf nginx-$NGINX_VERSION.tar.gz \
@@ -22,6 +22,7 @@ RUN addgroup -g 499 -S nginx \
     && echo $PWD \
     && cd nginx-$NGINX_VERSION \
     && echo $PWD \
+    && ls -al \
     && echo "Hello2" \
     ./configure \
     --prefix=/usr/local/nginx \
