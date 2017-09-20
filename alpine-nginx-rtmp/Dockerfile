@@ -22,6 +22,7 @@ RUN addgroup -g 499 -S nginx \
     && echo $PWD \
     && cd nginx-$NGINX_VERSION \
     && echo $PWD \
+    && echo "Hello2" \
     ./configure \
     --prefix=/usr/local/nginx \
     --conf-path=/etc/nginx/nginx.conf \
