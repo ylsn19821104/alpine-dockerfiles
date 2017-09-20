@@ -9,7 +9,7 @@ ENV NGINX_VERSION 1.10.1
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
 RUN apk --update add tzdata wget \
-	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN addgroup -g 499 -S nginx \
     && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
