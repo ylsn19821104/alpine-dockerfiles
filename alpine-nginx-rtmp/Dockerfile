@@ -8,7 +8,7 @@ ENV NGINX_VERSION 1.10.1
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
-RUN apk --update add tzdata wget \
+RUN apk --update add tzdata \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN addgroup -g 499 -S nginx \
@@ -17,9 +17,9 @@ RUN addgroup -g 499 -S nginx \
     && cd /tmp \
     && wget http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar xzf nginx-$NGINX_VERSION.tar.gz \
-    && rm -rf nginx-$NGINX_VERSION.tar.gz \
+#    && rm -rf nginx-$NGINX_VERSION.tar.gz \
     && echo "Hello" \
-    && cd /tmp/nginx-$NGINX_VERSION \
+    && cd nginx-$NGINX_VERSION \
     ./configure \
     --prefix=/usr/local/nginx \
     --conf-path=/etc/nginx/nginx.conf \
@@ -40,9 +40,9 @@ RUN addgroup -g 499 -S nginx \
     --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
     && make && make install \
     && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
-    && echo "daemon off;" >> /etc/nginx/ngnix.conf \
-    && apk del wget \
-    && rm -rf /var/cache/apk/* /tmp/*
+    && echo "daemon off;" >> /etc/nginx/ngnix.conf
+#    && apk del wget \
+#    && rm -rf /var/cache/apk/* /tmp/*
 
 ENV PATH /usr/local/nginx/sbin:$PATH
 EXPOSE 80
