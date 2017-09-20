@@ -23,7 +23,7 @@ RUN addgroup -g 499 -S nginx \
     && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev \
         pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev \
         libstdc++ libgcc patch logrotate supervisor inotify-tools \
-        libpng libpng-devel \
+       # libpng libpng-devel \
     && rm -rf /var/cache/apk/*
 
 RUN ./configure \
