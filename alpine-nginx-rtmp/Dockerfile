@@ -1,6 +1,8 @@
 FROM alpine:latest
 MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
+ENV TZ=Asia/Shanghai
+
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
