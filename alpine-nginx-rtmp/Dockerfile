@@ -14,6 +14,8 @@ RUN apk --update add tzdata curl \
 ENV NGINX_VERSION nginx-1.12.1
 
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
+    && addgroup -g 499 -S nginx \
+    && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
     && mkdir -p /tmp/src \
     && cd /tmp/src \
     && wget http://nginx.org/download/${NGINX_VERSION}.tar.gz \
