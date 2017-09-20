@@ -3,7 +3,7 @@ MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
 ENV TZ=Asia/Shanghai
 
-ENV NGINX_VERSION=nginx-1.12.0
+ENV NGINX_VERSION=nginx-1.10.1
 
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
