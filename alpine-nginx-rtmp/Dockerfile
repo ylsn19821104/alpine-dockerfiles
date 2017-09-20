@@ -3,6 +3,8 @@ MAINTAINER niuyuxian <"ncc0706@gmail.com">
 
 ENV TZ=Asia/Shanghai
 
+ENV NGINX_VERSION=nginx-1.12.0
+
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
@@ -14,10 +16,10 @@ RUN apk --update add tzdata vim \
 RUN addgroup -g 499 -S nginx \
     && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
     && cd /usr/local \
-    && curl -sO http://nginx.org/download/nginx-1.10.1.tar.gz \
-    && tar xf nginx-1.10.1.tar.gz \
-    && rm -rf nginx-1.10.1.tar.gz \
-    && cd nginx-1.10.1 \
+    && curl -sO http://nginx.org/download/$NGINX_VESION.tar.gz \
+    && tar xf $NGINX_VESION.tar.gz \
+    && rm -rf $NGINX_VESION.tar.gz \
+    && cd $NGINX_VESION \
     && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev libstdc++ libgcc patch logrotate supervisor inotify-tools && rm -rf /var/cache/apk/*
 
 RUN RUN ./configure \
