@@ -16,10 +16,10 @@ RUN apk --update add tzdata vim curl \
 RUN addgroup -g 499 -S nginx \
     && adduser -HDu 499 -s /sbin/nologin -g 'web server' -G nginx nginx \
     && cd /usr/local \
-    && curl -sO http://nginx.org/download/$NGINX_VESION.tar.gz \
-    && tar xf $NGINX_VESION.tar.gz \
-    && rm -rf $NGINX_VESION.tar.gz \
-    && cd $NGINX_VESION \
+    && curl -sO http://nginx.org/download/$NGINX_VERSION.tar.gz \
+    && tar xf $NGINX_VERSION.tar.gz \
+    && rm -rf $NGINX_VERSION.tar.gz \
+    && cd $NGINX_VERSION \
     && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev libstdc++ libgcc patch logrotate supervisor inotify-tools && rm -rf /var/cache/apk/*
 
 RUN RUN ./configure \
