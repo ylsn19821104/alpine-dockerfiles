@@ -6,7 +6,7 @@ ENV TZ Asia/Shanghai
 ENV NGINX_VERSION 1.10.1
 
 # 国内镜像
-RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
+#RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
 RUN apk --update add tzdata \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
