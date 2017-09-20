@@ -8,7 +8,7 @@ ENV NGINX_VERSION=nginx-1.12.0
 # 国内镜像
 # RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 
-RUN apk --update add tzdata vim \
+RUN apk --update add tzdata vim curl \
 	&& cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	&& rm -rf /var/cache/apk/* /tmp/*
 
