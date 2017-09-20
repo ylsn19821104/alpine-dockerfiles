@@ -13,11 +13,11 @@ RUN apk --update add tzdata curl \
 
 ENV NGINX_VERSION nginx-1.12.1
 
-RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
-    mkdir -p /tmp/src && \
-    cd /tmp/src
-   && curl -sO http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
-    tar -zxvf ${NGINX_VERSION}.tar.gz && \
+RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
+    && mkdir -p /tmp/src \
+    && cd /tmp/src \
+    && curl -sO http://nginx.org/download/${NGINX_VERSION}.tar.gz \
+    && tar -zxvf ${NGINX_VERSION}.tar.gz \ &&
     cd /tmp/src/${NGINX_VERSION} && \
     ./configure \
         --with-http_ssl_module \
