@@ -39,12 +39,12 @@ RUN addgroup -g 499 -S nginx \
 #    --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
 #    --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
 #    && make && make install \
-    && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
-    && echo "daemon off;" >> /etc/nginx/ngnix.conf \
+#    && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
+#    && echo "daemon off;" >> /etc/nginx/ngnix.conf \
     && apk del wget \
     && rm -rf /var/cache/apk/* /tmp/*
 
 ENV PATH /usr/local/nginx/sbin:$PATH
 EXPOSE 80
 
-CMD ["/usr/local/nginx/sbin/nginx"]
+#CMD ["/usr/local/nginx/sbin/nginx"]
