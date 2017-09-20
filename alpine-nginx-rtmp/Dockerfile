@@ -22,7 +22,7 @@ RUN addgroup -g 499 -S nginx \
     && cd $NGINX_VERSION \
     && apk --update --no-cache add geoip geoip-dev pcre libxslt gd openssl-dev pcre-dev zlib-dev build-base linux-headers libxslt-dev gd-dev openssl-dev libstdc++ libgcc patch logrotate supervisor inotify-tools && rm -rf /var/cache/apk/*
 
-RUN RUN ./configure \
+RUN ./configure \
     --prefix=/usr/local/nginx \
     --conf-path=/etc/nginx/nginx.conf \
     --user=nginx \
