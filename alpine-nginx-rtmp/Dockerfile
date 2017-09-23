@@ -62,6 +62,6 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY data /opt/show
 
-EXPOSE 80 443
+EXPOSE 80 443 1935
 
 CMD ["nginx", "-g", "daemon off;"]
