@@ -20,6 +20,8 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
     && cd /tmp/src \
     && wget http://nginx.org/download/${NGINX_VERSION}.tar.gz \
     && tar -zxvf ${NGINX_VERSION}.tar.gz \
+    && wget https://github.com/arut/nginx-rtmp-module/archive/v1.1.11.tar.gz -O nginx-rtmp-module-1.1.11.tar.gz \
+    && tar -zxvf nginx-rtmp-module-1.1.11.tar.gz \
     && cd /tmp/src/${NGINX_VERSION} \
     && ./configure \
        --prefix=/usr/local/nginx \
@@ -39,6 +41,7 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
        --http-proxy-temp-path=/var/tmp/nginx/proxy \
        --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
        --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
+       --add-module=../nginx-rtmp-module-1.1.11 \
     && make && make install \
     && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
     && echo "daemon off;" >> /etc/nginx/ngnix.conf \
@@ -54,6 +57,10 @@ ENV PATH /usr/local/nginx/sbin:$PATH
 
 #VOLUME ["/var/log/nginx"]
 #WORKDIR /etc/nginx
+
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+COPY data /opt/show
 
 EXPOSE 80 443
 
