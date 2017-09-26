@@ -5,6 +5,7 @@ MAINTAINER niuyuxian <ncc0706@gmail.com>
 ENV TZ Asia/Shanghai
 ENV NGINX_VERSION nginx-1.12.1
 
+# for china
 RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/main\n" > /etc/apk/repositories
 RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/latest-stable/community\n" >> /etc/apk/repositories
 
