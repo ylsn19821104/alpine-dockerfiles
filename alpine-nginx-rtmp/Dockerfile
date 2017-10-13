@@ -44,7 +44,7 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
        --add-module=../nginx-rtmp-module-1.1.11 \
     && make && make install \
     && mkdir -p /var/tmp/nginx/{client,fastcgi,proxy,uwsgi} \
-    && echo "daemon off;" >> /etc/nginx/ngnix.conf \
+    && echo "daemon off;" >> /etc/nginx/nginx.conf \
     && apk del build-base \
     && rm -rf /tmp/src \
     && rm -rf /var/cache/apk/*
